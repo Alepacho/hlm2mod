@@ -23,8 +23,13 @@ That's it! You can now see some useless debug info in Terminal and ImGui.
 
 ### Some useful links
 https://github.com/CookiePLMonster/HM2-XP
+
 https://www.youtube.com/watch?v=W_k6vpJqpAo
+
 https://www.youtube.com/watch?v=ma5-6zFBlT8
+
 http://ctrl500.com/tech/upgrading-core-tech-for-hotline-miami-2-wrong-number/
+
 https://www.reddit.com/r/Games/comments/2ypf1w/hotline_miami_2_secret_developer_menu/
+
 https://steamcommunity.com/app/274170/discussions/0/617329920705882457/
