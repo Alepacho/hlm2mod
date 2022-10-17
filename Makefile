@@ -53,7 +53,7 @@ hook:
 
 macos: fishhook.o AutoHook.o imgui_all gui_mac hook
 	cp $(INAME)hook.dylib ./HotlineMiami2.app/Contents/MacOS/hook.dylib
-	cp $(INAME)/hlm2mod.sh ./HotlineMiami2.app/Contents/MacOS/hlm2mod.sh
+	cp $(INAME)hlm2mod.sh ./HotlineMiami2.app/Contents/MacOS/hlm2mod.sh
 
 # тупо перемещает либу с 644 настройками
 imacos: hook
