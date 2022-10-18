@@ -360,10 +360,10 @@ void *hook_ZNSt3__16vectorIPN3gml17GMLObjectInstanceENS_9allocatorIS3_EEE8alloca
 // 1+3+1+1+1067+265+248+252+1+2+18+3+9+6+7+405+21+104 = 2414 (примерно)
 static void *(*orig_ZNSt3__16vectorIPN3gml9GMLObjectENS_9allocatorIS3_EEE8__appendEm)(void*, unsigned long);
 void *hook_ZNSt3__16vectorIPN3gml9GMLObjectENS_9allocatorIS3_EEE8__appendEm(void* self, unsigned long size) {
-    std::stringstream str;
-    str << "vector<gml::GMLObject*, allocator<gml::GMLObject*> >::__append(";
-    str << hex(self) << ", " << size << ")";
-    gui_logger_insert(str.str());
+    // std::stringstream str;
+    // str << "vector<gml::GMLObject*, allocator<gml::GMLObject*> >::__append(";
+    // str << hex(self) << ", " << size << ")";
+    // gui_logger_insert(str.str());
     return orig_ZNSt3__16vectorIPN3gml9GMLObjectENS_9allocatorIS3_EEE8__appendEm(self, size);
 }
 // orig_ZNSt3__16vectorIPN3gml9GMLObjectENS_9allocatorIS3_EEE8__appendEm
@@ -434,8 +434,8 @@ void *hook_ZN4ListIPN3gml17GMLObjectInstanceEEC2Ev(void* ptr) {
         //hexdump(result, 1024);
     //}
     std::stringstream str;
-    str << "List<gml::GMLObjectInstance*>::List(" << hex(ptr) << ") " << list_inst_number; //  // ! почему-то вылетает если указать аргумент
-    gui_logger_insert(str.str());
+    // str << "List<gml::GMLObjectInstance*>::List(" << hex(ptr) << ") " << list_inst_number; //  // ! почему-то вылетает если указать аргумент
+    // gui_logger_insert(str.str());
     list_inst_number++;
     return result;
 }
