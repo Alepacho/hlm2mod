@@ -17,6 +17,8 @@
 // friendship ended with mach_override
 // now fishhook is my best friend 😎🤝🪝
 #include "fishhook.h"
+#include "hotpatch.h"
+
 #include "objects.h"
 
 #ifdef __APPLE__
@@ -555,6 +557,26 @@ const char* hook_SDL_GetKeyName(SDL_Keycode key) {
     return result;
 }
 
+typedef void (*func_def)(void*);
+// // static const void (*test_func0001)(void);
+func_def test_func_orig0001;
+// void* test_fubc_hook0001(void*) {
+//     return __FUNCTION__;
+// }
+
+// https://github.com/aaaddress1/OSX-Dyanmic-Hook/blob/master/main.cpp
+void* idk_data;
+void test_func_hook0001(void*idk) {
+    std::stringstream str;
+    str << (char*)idk << std::endl;
+    gui_logger_insert(str.str());
+
+    std::cout << (char*)idk << std::endl;
+    funcHookOff((void*)test_func_orig0001, idk_data);
+    test_func_orig0001(idk);
+    funcHookOn((void*)test_func_orig0001, (void*)test_func_hook0001, idk_data);
+}
+
 // ******************************** Hook Entry ********************************
 void hookEntryPoint() {
     std::cout << "[GameBaker Modding] Start" << std::endl;
@@ -564,6 +586,14 @@ void hookEntryPoint() {
     gui_logger_insert(str.str());
 
 
+    const uint64_t imgside_ptr = ImageSlide();
+    test_func_orig0001 = (func_def)(0x1028bf000 + imgside_ptr); // write to console function callback
+
+    idk_data = malloc(payloadSize);
+    funcHookOn((void*)test_func_orig0001, (void*)test_func_hook0001, idk_data);
+
+
+    test_func_hook0001((void*)"this is a test");
 
     // 
     // rebind macOS stuff

@@ -6,10 +6,10 @@ STD = -std=c++11
 
 # `sdl2-config --libs`
 LIBS = -framework SDL2 -framework OpenGL -framework Cocoa -F/Library/Frameworks -framework GameController
-#	-L./mach_override/build -lmach_override_64 
-# 	-I./mach_override 
+# -L./mach_override/build -lmach_override_64 
 LPATH = ./obj/
 IPATH = -I./imgui -I./fishhook -I./ObjectiveHooker -I/Library/Frameworks/SDL2.framework/Headers
+# -I./mach_override 
 RPATH = -rpath @executable_path/
 SRC = ./src/hook.cpp 
 
