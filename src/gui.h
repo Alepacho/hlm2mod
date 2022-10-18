@@ -43,4 +43,8 @@ inline void hexdump(T const *ptr, size_t buflen = sizeof(T)) {
     }
 }
 
+CFUN uint64_t StaticBaseAddress(void);
+CFUN intptr_t ImageSlide(void);
+CFUN uint64_t DynamicBaseAddress(void);
+
 #endif // GUI_H

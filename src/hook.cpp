@@ -40,9 +40,8 @@
 
 template< typename T >
 std::string hex(T i) {
-  std::stringstream stream;
-  stream << "0x" 
-         << std::setfill ('0') << std::setw(sizeof(T)*2) 
+  std::stringstream stream; // << std::setfill('0')
+  stream << std::setw(sizeof(T) * 2) 
          << std::hex << i;
   return stream.str();
 }
@@ -559,6 +558,12 @@ const char* hook_SDL_GetKeyName(SDL_Keycode key) {
 // ******************************** Hook Entry ********************************
 void hookEntryPoint() {
     std::cout << "[GameBaker Modding] Start" << std::endl;
+    std::stringstream str;
+    str << "ImageSlide Address: " << hex(ImageSlide());
+    str << "Dynamic Base Address: " << hex(DynamicBaseAddress());
+    gui_logger_insert(str.str());
+
+
 
     // 
     // rebind macOS stuff
@@ -643,8 +648,8 @@ void hookEntryPoint() {
 
     // check all functions
     // 1 if rebinded, else 0 
-    std::cout << "CGLFlushDrawable: " <<  orig_CGLFlushDrawable << std::endl; 
-    std::cout << "CGMainDisplayID: " <<  orig_CGMainDisplayID << std::endl; 
+    std::cout << "CGLFlushDrawable: " << orig_CGLFlushDrawable << std::endl; 
+    std::cout << "CGMainDisplayID: " << orig_CGMainDisplayID << std::endl; 
     std::cout << "CGWarpMouseCursorPosition: " <<  orig_CGWarpMouseCursorPosition << std::endl; 
     std::cout << "CGDisplayHideCursor: " <<  orig_CGDisplayHideCursor << std::endl; 
     std::cout << "ZN3gml17GMLObjectInstance12SetDirectionEd: " <<  orig_ZN3gml17GMLObjectInstance12SetDirectionEd << std::endl; 
@@ -665,6 +670,7 @@ void hookEntryPoint() {
     std::cout << "vector<gml::GMLObject*, allocator<gml::GMLObject*> >::__append: " << orig_ZNSt3__16vectorIPN3gml9GMLObjectENS_9allocatorIS3_EEE8__appendEm << std::endl;
     
     // orig_ZNSt3__16vectorIPN3gml9GMLObjectENS_9allocatorIS3_EEE8__appendEm
+    
     gui_init();
 }
 
