@@ -249,7 +249,7 @@ int rebind_symbols_image(void *header,
 int rebind_symbols(struct rebinding rebindings[], size_t rebindings_nel) {
   int retval = prepend_rebindings(&_rebindings_head, rebindings, rebindings_nel);
   if (retval < 0) {
-    printf("retval < 0\n");
+    //printf("retval < 0\n");
     return retval;
   }
   // If this was the first call, register callback for image additions (which is also invoked for
@@ -260,11 +260,11 @@ int rebind_symbols(struct rebinding rebindings[], size_t rebindings_nel) {
   } else {
     printf("_rebindings_head->next\n");
     uint32_t c = _dyld_image_count();
-    printf("c: %i\n", c);
+    // printf("c: %i\n", c);
     for (uint32_t i = 0; i < c; i++) {
       _rebind_symbols_for_image(_dyld_get_image_header(i), _dyld_get_image_vmaddr_slide(i));
     }
   }
-  printf("retval: %i\n", retval);
+  //printf("retval: %i\n", retval);
   return retval;
 }
