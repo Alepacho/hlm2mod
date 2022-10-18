@@ -6,3 +6,4 @@ compile_commands.json
 HLM2dec
 .cache
 .vscode
+.hidden

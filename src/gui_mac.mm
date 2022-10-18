@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <mach-o/getsect.h>
+#include <mach-o/dyld.h>
 
 #import <Cocoa/Cocoa.h>                     // NSOpenGLView здесь
 #import <OpenGL/OpenGL.h>
@@ -29,6 +31,33 @@ static bool show_demo_window = false;
 std::vector<std::string> logger_list;
 int logger_list_max = 128;
 gml::GMLObject *gmlObject_ptr = NULL;
+
+
+// https://stackoverflow.com/questions/10301542/getting-process-base-address-in-mac-osx
+uint64_t StaticBaseAddress(void)
+{
+    const struct segment_command_64* command = getsegbyname("__TEXT");
+    uint64_t addr = command->vmaddr;
+    return addr;
+}
+
+intptr_t ImageSlide(void)
+{
+    char path[1024];
+    uint32_t size = sizeof(path);
+    if (_NSGetExecutablePath(path, &size) != 0) return -1;
+    for (uint32_t i = 0; i < _dyld_image_count(); i++)
+    {
+        if (strcmp(_dyld_get_image_name(i), path) == 0)
+            return _dyld_get_image_vmaddr_slide(i);
+    }
+    return 0;
+}
+
+uint64_t DynamicBaseAddress(void)
+{
+    return StaticBaseAddress() + ImageSlide();
+}
 
 // void *mem_data = (void*)0xdeadbeef;
 // ! размер объекта – 0xB0 (176) | 0xA8 (168)
@@ -107,6 +136,7 @@ void gui_start() {
 // NSOpenGLView *view_ptr
 void gui_init() {
     printf("objc gui init\n");
+    printf("dynamic base address (%0llx) = static base address (%0llx) + image slide (%0lx)\n", DynamicBaseAddress(), StaticBaseAddress(), ImageSlide());
     // gl_view = view;
 }
 
